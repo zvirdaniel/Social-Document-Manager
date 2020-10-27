@@ -1,9 +1,9 @@
 package cz.zvir.social.repositories;
 
 import cz.zvir.social.models.Document;
-import org.springframework.data.jpa.repository.JpaRepository;
+import cz.zvir.social.repositories.base.CommonRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<Document, String> {
+public interface DocumentRepository extends CommonRepository<Document, String> {
 }

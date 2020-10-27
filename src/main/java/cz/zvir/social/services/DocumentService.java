@@ -4,20 +4,18 @@ import cz.zvir.social.exceptions.SocialException;
 import cz.zvir.social.models.Document;
 import cz.zvir.social.models.Like;
 import cz.zvir.social.repositories.DocumentRepository;
-import cz.zvir.social.repositories.LikeRepository;
 import cz.zvir.social.requests.DocumentRequest;
+import cz.zvir.social.specifications.DocumentSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class DocumentService {
 	private final DocumentRepository repository;
-	private final LikeRepository likeRepository;
 	private final UserService userService;
 
 	public Document get(final String id) {
@@ -29,10 +27,7 @@ public class DocumentService {
 	}
 
 	public List<Document> getLikedDocuments(final long userId) {
-		return likeRepository.findAllByUser_Id(userId).stream()
-		                     .map(Like::getDocument)
-		                     .distinct()
-		                     .collect(Collectors.toList());
+		return repository.findAll(DocumentSpecification.likedByUser(userId));
 	}
 
 	public Document create(final String id, final DocumentRequest request) {

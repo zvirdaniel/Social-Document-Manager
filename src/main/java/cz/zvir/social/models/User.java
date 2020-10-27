@@ -2,8 +2,9 @@ package cz.zvir.social.models;
 
 import com.sun.istack.NotNull;
 import cz.zvir.social.models.base.CommonModel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class User extends CommonModel<Long> {
 	@Id
 	@Column(nullable = false)
@@ -44,5 +46,9 @@ public class User extends CommonModel<Long> {
 	public void setDocuments(List<Document> documents) {
 		this.documents.clear();
 		Optional.ofNullable(documents).ifPresent(this.documents::addAll);
+	}
+
+	public User(final String name) {
+		this.name = name;
 	}
 }
